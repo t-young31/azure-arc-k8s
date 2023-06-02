@@ -1,0 +1,5 @@
+.env*
+!.env.sample
+terraform.tfstate*
+.terraform/
+.DS_Store
