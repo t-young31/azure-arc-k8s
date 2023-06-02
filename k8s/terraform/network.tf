@@ -6,7 +6,7 @@ resource "aws_security_group" "allow_all_tls_from_deployer_ip" {
   ingress {
     description = "TLS"
     from_port   = 0
-    to_port     = 0
+    to_port     = 65535
     protocol    = "tcp"
     cidr_blocks = ["${local.deployer_ip}/32"]
   }

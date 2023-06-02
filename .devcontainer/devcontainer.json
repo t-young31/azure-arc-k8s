@@ -1,6 +1,10 @@
 {
 	"name": "aws_k8_on_ec2",
-	"image": "mcr.microsoft.com/devcontainers/python:0-3.10-bullseye",
+	"build": {
+		"context": "..",
+		"dockerfile": "Dockerfile",
+		"args": {}
+	},
 
 	// Configure VS Code properties & extensions
 	"customizations": {
@@ -20,7 +24,8 @@
 			"version": "1.3.7"
 		},
 		"ghcr.io/stuartleeks/dev-container-features/azure-cli-persistence:0": {},
-		"ghcr.io/devcontainers/features/aws-cli:1": {}
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers/features/azure-cli:1": {}
 	},
 
 	// Run commands on container start-up before tools attach

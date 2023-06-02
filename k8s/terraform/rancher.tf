@@ -9,6 +9,10 @@ resource "helm_release" "cert_manager" {
     name  = "installCRDs"
     value = "true"
   }
+
+  depends_on = [
+    local_file.kube_config_server_yaml
+  ]
 }
 
 resource "helm_release" "rancher_server" {
@@ -38,10 +42,23 @@ resource "helm_release" "rancher_server" {
   }
 }
 
-resource "ssh_resource" "server_init" {
-  for_each    = local.server_init_commands
-  host        = local.server_public_ip
-  commands    = [each.value]
+resource "ssh_resource" "install_k3s" {
+  host = local.server_public_ip
+  commands = [
+    "bash -c 'curl https://get.k3s.io | INSTALL_K3S_EXEC=\"server --node-external-ip ${local.server_public_ip} --node-ip ${local.server_internal_ip}\" INSTALL_K3S_VERSION=${local.rancher_kubernetes_version} sh -'"
+  ]
+  user        = local.server_username
+  private_key = tls_private_key.global_key.private_key_pem
+}
+
+resource "ssh_resource" "retrieve_config" {
+  depends_on = [
+    ssh_resource.install_k3s
+  ]
+  host = local.server_public_ip
+  commands = [
+    "sudo sed \"s/127.0.0.1/${local.server_public_ip}/g\" /etc/rancher/k3s/k3s.yaml"
+  ]
   user        = local.server_username
   private_key = tls_private_key.global_key.private_key_pem
 }
@@ -82,7 +99,7 @@ resource "rancher2_cluster_v2" "quickstart_workload" {
 # Save local files for interacting from local
 resource "local_file" "kube_config_server_yaml" {
   filename = "${path.root}/kube_config_server.yaml"
-  content  = ssh_resource.server_init["retrieve_config"].result
+  content  = ssh_resource.retrieve_config.result
 }
 
 resource "local_file" "kube_config_workload_yaml" {

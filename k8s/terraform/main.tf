@@ -20,6 +20,10 @@ terraform {
       source  = "rancher/rancher2"
       version = "3.0.0"
     }
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.10.0"
+    }
     ssh = {
       source  = "loafoe/ssh"
       version = "2.6.0"
@@ -32,7 +36,6 @@ terraform {
 provider "aws" {
   region = "eu-west-2" # London
 }
-
 
 provider "helm" {
   kubernetes {
