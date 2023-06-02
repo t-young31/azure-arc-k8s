@@ -1,9 +1,10 @@
 resource "aws_instance" "rancher_server" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = "t3a.medium"
+  key_name      = aws_key_pair.ssh.key_name
 
   tags = {
-    Name = "ty_test_tf_instance"
+    Name = "${var.aws_prefix}-rancher-server"
   }
 
   network_interface {
@@ -15,19 +16,34 @@ resource "aws_instance" "rancher_server" {
     volume_size = 30 # GB
     volume_type = "gp3"
   }
+
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'Waiting for cloud-init to complete...'",
+      "cloud-init status --wait > /dev/null",
+      "echo 'Completed cloud-init!'",
+    ]
+
+    connection {
+      type        = "ssh"
+      host        = self.public_ip
+      user        = local.ec2_username
+      private_key = tls_private_key.global_key.private_key_pem
+    }
+  }
 }
 
 resource "aws_security_group" "rancher_server" {
-  name        = "allow_ssh"
+  name        = "${var.aws_prefix}-allow-all-from-deployer-ip"
   description = "Allow TLS inbound traffic"
   vpc_id      = data.aws_vpc.playpen.id
 
   ingress {
     description      = "TLS"
-    from_port        = 22
-    to_port          = 22
+    from_port        = 0
+    to_port          = 0
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${local.deployer_ip}/32"]
   }
 
   egress {
@@ -36,10 +52,6 @@ resource "aws_security_group" "rancher_server" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
-  }
-
-  tags = {
-    Name = "allow_ssh"
   }
 }
 
