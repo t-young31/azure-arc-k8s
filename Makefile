@@ -16,3 +16,6 @@ destroy-k8s:
 	source load_env.sh && \
 	cd k8s/terraform && \
 	terraform apply -destroy
+
+fmt:
+	terraform fmt --recursive

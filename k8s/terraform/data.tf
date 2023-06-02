@@ -1,4 +1,4 @@
-data "aws_ami" "ubuntu" {  # Amazon machine image
+data "aws_ami" "ubuntu" { # Amazon machine image
   most_recent = true
 
   filter {
@@ -23,5 +23,5 @@ data "aws_subnet" "public_playpen" {
 }
 
 data "http" "deployer_ip" {
-  url   = "https://api64.ipify.org"
+  url = "https://api64.ipify.org"
 }

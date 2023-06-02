@@ -1,5 +1,5 @@
 variable "aws_prefix" {
-  type = string
+  type        = string
   description = "Prefix used to uniquley name resources"
 }
 

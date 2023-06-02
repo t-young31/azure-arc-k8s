@@ -33,33 +33,12 @@ resource "aws_instance" "rancher_server" {
   }
 }
 
-resource "aws_security_group" "rancher_server" {
-  name        = "${var.aws_prefix}-allow-all-from-deployer-ip"
-  description = "Allow TLS inbound traffic"
-  vpc_id      = data.aws_vpc.playpen.id
-
-  ingress {
-    description      = "TLS"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "tcp"
-    cidr_blocks      = ["${local.deployer_ip}/32"]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
 resource "aws_network_interface" "rancher_server" {
-  subnet_id   = data.aws_subnet.public_playpen.id
-  security_groups = [aws_security_group.rancher_server.id]
+  subnet_id       = data.aws_subnet.public_playpen.id
+  security_groups = [aws_security_group.allow_all_tls_from_deployer_ip.id]
 
   tags = {
     Name = "primary_network_interface"
   }
 }
+
