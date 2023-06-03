@@ -1,8 +1,8 @@
 locals {
   deployer_ip                = data.http.deployer_ip.response_body
   ec2_username               = "ubuntu"
-  cert_manager_version       = "1.12.1"
-  rancher_version            = "2.7.4"
+  cert_manager_version       = "1.10.0"
+  rancher_version            = "2.7.3"
   rancher_kubernetes_version = "v1.24.13+k3s1"
   rancher_helm_repository    = "https://releases.rancher.com/server-charts/latest"
   rancher_server_dns         = join(".", ["rancher", aws_instance.rancher_server.public_ip, "sslip.io"])

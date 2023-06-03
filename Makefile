@@ -9,7 +9,7 @@ deploy: deploy-k8s deploy-aml
 deploy-k8s:
 	source load_env.sh && \
 	cd k8s/terraform && \
-	terraform init && \
+	terraform init -upgrade && \
 	terraform validate && \
 	terraform apply
 
@@ -22,7 +22,7 @@ destroy-k8s:
 deploy-aml:
 	source load_env.sh && \
 	cd aml/terraform && \
-	terraform init && \
+	terraform init -upgrade && \
 	terraform validate && \
 	terraform apply
 
