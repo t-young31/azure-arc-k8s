@@ -41,6 +41,8 @@ resource "aws_instance" "example_node" {
       private_key = tls_private_key.global_key.private_key_pem
     }
   }
+
+  depends_on = [ aws_internet_gateway.rancher ]
 }
 
 #resource "aws_network_interface" "example_node" {

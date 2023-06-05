@@ -11,15 +11,12 @@ resource "helm_release" "cert_manager" {
   }
 
   depends_on = [
-    local_file.kube_config_server_yaml
+    local_file.kube_config_server_yaml,
+    aws_instance.rancher_server
   ]
 }
 
 resource "helm_release" "rancher_server" {
-  depends_on = [
-    helm_release.cert_manager,
-  ]
-
   name             = "rancher"
   chart            = "${local.rancher_helm_repository}/rancher-${local.rancher_version}.tgz"
   namespace        = "cattle-system"
@@ -40,6 +37,10 @@ resource "helm_release" "rancher_server" {
     name  = "bootstrapPassword"
     value = "admin"
   }
+
+  depends_on = [
+    helm_release.cert_manager,
+  ]
 }
 
 resource "ssh_resource" "install_k3s" {
