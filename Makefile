@@ -12,7 +12,7 @@ deploy-k8s:
 	terraform init -upgrade && \
 	terraform validate && \
 	terraform apply && \
-	echo -n "rancher password: "; terraform output -raw admin_server_password; echo "" 
+	echo -n "rancher password = "; terraform output -raw admin_server_password; echo "" 
 
 destroy-k8s:
 	source load_env.sh && \

@@ -1,8 +1,3 @@
-resource "azurerm_resource_group" "aml" {
-  name     = "rg-${var.azure_suffix}"
-  location = local.location
-}
-
 resource "azurerm_application_insights" "aml" {
   name                = "ai-aml-${var.azure_suffix}"
   location            = azurerm_resource_group.aml.location
@@ -38,4 +33,8 @@ resource "azurerm_machine_learning_workspace" "example" {
   identity {
     type = "SystemAssigned"
   }
+}
+
+resource "azurerm_arc_kubernetes_cluster" "aml" {
+  
 }
