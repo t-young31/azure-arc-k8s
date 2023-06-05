@@ -1,4 +1,16 @@
 # AML + K8s
 
-[k8s/](./k8s/terraform) borrows heavily from https://github.com/rancher/quickstart/tree/master/rancher/aws
-[aml/](./aml/terraform/)
+## Usage
+
+```
+make login
+made deploy
+# make destroy
+```
+
+Go to the AML workspace → Jobs → Create → Kubernetes compute → Add cluster → _Run an AML job_
+
+
+## Modules
+[k8s/](./terraform/k8s/) borrows heavily from https://github.com/rancher/quickstart/tree/master/rancher/aws
+[aml/](./terraform/aml)

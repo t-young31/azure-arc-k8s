@@ -1,5 +1,9 @@
 terraform {
   required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.59.0"
+    }
     aws = {
       source  = "hashicorp/aws"
       version = "5.0.1"
@@ -16,17 +20,13 @@ terraform {
       source  = "hashicorp/local"
       version = "2.4.0"
     }
-    rancher2 = {
-      source  = "rancher/rancher2"
-      version = "3.0.0"
-    }
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = "2.10.0"
     }
-    ssh = {
-      source  = "loafoe/ssh"
-      version = "2.6.0"
+    null = {
+      source  = "hashicorp/null"
+      version = "3.2.1"
     }
   }
 

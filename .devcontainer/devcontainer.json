@@ -33,7 +33,7 @@
 	// "onCreateCommand": "",
 
 	// Run commands after the container is created
-	// "postCreateCommand": "",
+	"postCreateCommand": "az extension add --name connectedk8s",
 
 	// Ensure working directory is trusted by Git (needs to be post start so we pick up host's git configuration first)
 	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"

@@ -1,24 +1,17 @@
-resource "aws_instance" "example_node" {
+resource "aws_instance" "rancher_server" {
   ami           = data.aws_ami.sles.id
-  instance_type = "t3a.xlarge"
+  instance_type = "t3a.medium"
   key_name      = aws_key_pair.ssh.key_name
 
-  subnet_id                   = aws_subnet.rancher.id
-  vpc_security_group_ids      = [aws_security_group.allow_all_tls_from_deployer_ip.id]
+  subnet_id              = aws_subnet.rancher.id
+  vpc_security_group_ids = [aws_security_group.allow_all_tls_from_deployer_ip.id]
 
   tags = {
-    Name = "${var.aws_prefix}-rancher-node"
+    Name = "${var.aws_prefix}-rancher-server"
   }
 
-  user_data = templatefile(
-    "${path.module}/userdata_example_node.template",
-    {
-      register_command = rancher2_cluster_v2.quickstart_workload.cluster_registration_token.0.insecure_node_command
-    }
-  )
-
   #network_interface {
-  #  network_interface_id = aws_network_interface.example_node.id
+  #  network_interface_id = aws_network_interface.rancher_server.id
   #  device_index         = 0
   #}
 
@@ -43,7 +36,7 @@ resource "aws_instance" "example_node" {
   }
 }
 
-#resource "aws_network_interface" "example_node" {
+#resource "aws_network_interface" "rancher_server" {
 #  #subnet_id       = data.aws_subnet.public_playpen.id
 #  subnet_id       = aws_subnet.rancher.id
 #  security_groups = [aws_security_group.allow_all_tls_from_deployer_ip.id]
@@ -52,3 +45,4 @@ resource "aws_instance" "example_node" {
 #    Name = "primary_network_interface"
 #  }
 #}
+

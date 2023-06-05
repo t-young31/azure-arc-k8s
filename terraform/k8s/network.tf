@@ -14,9 +14,9 @@ resource "aws_internet_gateway" "rancher" {
     Name = "${var.aws_prefix}-rancher-gateway"
   }
 
-  depends_on = [ 
+  depends_on = [
     aws_subnet.rancher
-   ]
+  ]
 }
 
 resource "aws_subnet" "rancher" {

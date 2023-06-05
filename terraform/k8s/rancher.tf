@@ -63,19 +63,6 @@ resource "ssh_resource" "retrieve_config" {
   private_key = tls_private_key.global_key.private_key_pem
 }
 
-resource "random_password" "rancher_server" {
-  length           = 32
-  lower            = true
-  min_lower        = 5
-  upper            = true
-  min_upper        = 5
-  numeric          = true
-  min_numeric      = 5
-  special          = true
-  min_special      = 5
-  override_special = "_%@"
-}
-
 # Initialize Rancher server
 resource "rancher2_bootstrap" "admin" {
   depends_on = [
@@ -84,7 +71,7 @@ resource "rancher2_bootstrap" "admin" {
 
   provider = rancher2.bootstrap
 
-  password  = random_password.rancher_server.result
+  password  = var.rancher_server_password
   telemetry = true
 }
 
