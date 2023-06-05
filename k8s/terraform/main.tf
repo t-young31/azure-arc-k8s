@@ -22,7 +22,7 @@ terraform {
     }
     helm = {
       source = "hashicorp/helm"
-      version = "2.5.1"
+      version = "2.10.0"
     }
     ssh = {
       source  = "loafoe/ssh"

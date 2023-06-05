@@ -1,6 +1,7 @@
 locals {
   deployer_ip                = data.http.deployer_ip.response_body
-  ec2_username               = "ubuntu"
+  availability_zone          = "eu-west-2a"
+  ec2_username               = "ec2-user"
   cert_manager_version       = "1.10.0"
   rancher_version            = "2.7.3"
   rancher_kubernetes_version = "v1.24.13+k3s1"
