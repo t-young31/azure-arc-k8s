@@ -13,6 +13,10 @@ resource "aws_internet_gateway" "rancher" {
   tags = {
     Name = "${var.aws_prefix}-rancher-gateway"
   }
+
+  depends_on = [ 
+    aws_subnet.rancher
+   ]
 }
 
 resource "aws_subnet" "rancher" {

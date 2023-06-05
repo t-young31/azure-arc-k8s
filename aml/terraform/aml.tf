@@ -35,6 +35,3 @@ resource "azurerm_machine_learning_workspace" "example" {
   }
 }
 
-resource "azurerm_arc_kubernetes_cluster" "aml" {
-  
-}
