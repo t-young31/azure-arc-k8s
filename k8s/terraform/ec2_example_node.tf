@@ -1,13 +1,13 @@
 resource "aws_instance" "example_node" {
   ami           = data.aws_ami.sles.id
-  instance_type = "t3a.medium"
+  instance_type = "t3a.xlarge"
   key_name      = aws_key_pair.ssh.key_name
 
   subnet_id                   = aws_subnet.rancher.id
   vpc_security_group_ids      = [aws_security_group.allow_all_tls_from_deployer_ip.id]
 
   tags = {
-    Name = "${var.aws_prefix}-rancher-server"
+    Name = "${var.aws_prefix}-rancher-node"
   }
 
   user_data = templatefile(

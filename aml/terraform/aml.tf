@@ -27,12 +27,13 @@ resource "azurerm_storage_account" "aml" {
 }
 
 resource "azurerm_machine_learning_workspace" "example" {
-  name                    = "aml-workspace-${var.azure_suffix}"
-  location                = azurerm_resource_group.aml.location
-  resource_group_name     = azurerm_resource_group.aml.name
-  application_insights_id = azurerm_application_insights.aml.id
-  key_vault_id            = azurerm_key_vault.aml.id
-  storage_account_id      = azurerm_storage_account.aml.id
+  name                          = "aml-workspace-${var.azure_suffix}"
+  location                      = azurerm_resource_group.aml.location
+  resource_group_name           = azurerm_resource_group.aml.name
+  application_insights_id       = azurerm_application_insights.aml.id
+  key_vault_id                  = azurerm_key_vault.aml.id
+  storage_account_id            = azurerm_storage_account.aml.id
+  public_network_access_enabled = true
 
   identity {
     type = "SystemAssigned"

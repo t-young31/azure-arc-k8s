@@ -11,7 +11,8 @@ deploy-k8s:
 	cd k8s/terraform && \
 	terraform init -upgrade && \
 	terraform validate && \
-	terraform apply
+	terraform apply && \
+	echo -n "rancher password: "; terraform output -raw admin_server_password; echo "" 
 
 destroy-k8s:
 	source load_env.sh && \
