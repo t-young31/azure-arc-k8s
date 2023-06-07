@@ -9,6 +9,7 @@ function cattle_system_is_running(){
 
 echo -n "Waiting for workload cluster to be up..."
 while ! cattle_system_is_running; do
-    sleep 2
+    sleep 10
 done
+sleep 30  # even though the agent is deployed there needs to be some wait time..
 echo "done"

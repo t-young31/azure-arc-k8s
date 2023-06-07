@@ -1,9 +1,3 @@
-
-
-# az connectedk8s connect --name "arc-tmpty" --resource-group "rg-tmpty" --location "uksouth" --correlation-id "c18ab9d0-685e-48e7-ab55-12588447b0ed" --tags "Datacenter City StateOrDistrict CountryOrRegion" --kube-config k8s/terraform/kube_config_workload.yaml  --distribution rancher_rke
-
-# az k8s-extension create -n amlarc-extension --extension-type Microsoft.AzureML.Kubernetes --configuration-settings enableTraining=True --cluster-type connectedClusters --cluster-name "arc-tmpty" --resource-group rg-tmpty
-
 resource "random_uuid" "correlation_id" {
 }
 
